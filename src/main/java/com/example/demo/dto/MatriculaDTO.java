@@ -22,7 +22,6 @@ public class MatriculaDTO {
     private String id;
 
     @NotNull
-    @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}$", message = "El formato debe ser 'yyyy-MM-ddTHH:mm:ss'")
     private LocalDateTime fechaMatricula;
 
     @NotNull

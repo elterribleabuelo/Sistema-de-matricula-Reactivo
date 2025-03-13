@@ -79,7 +79,7 @@ public class CursoController {
     }
 
     @PutMapping("/{id}")
-    public Mono<ResponseEntity<GenericResponseDTO>> update(@Valid @PathVariable("id") String id, @RequestBody CursoDTO curso) {
+    public Mono<ResponseEntity<GenericResponseDTO>> update(@Valid @PathVariable("id") String id, @Valid @RequestBody CursoDTO curso) {
 
         return Mono.just(curso)
                 .map(e -> {

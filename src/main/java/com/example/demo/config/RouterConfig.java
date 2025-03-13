@@ -2,6 +2,7 @@ package com.example.demo.config;
 
 import com.example.demo.handler.CursoHandler;
 import com.example.demo.handler.EstudianteHandler;
+import com.example.demo.handler.MatriculaHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.server.RouterFunction;
@@ -32,6 +33,11 @@ public class RouterConfig {
                 .andRoute(POST("/v2/estudiantes"),handler::save)
                 .andRoute(PUT("/v2/estudiantes/{id}"),handler::update)
                 .andRoute(DELETE("/v2/estudiantes/{id}"),handler::delete);
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> matriculasRoutes(MatriculaHandler handler){
+        return   route(POST("/v2/matriculas"),handler::save);
     }
 
 }

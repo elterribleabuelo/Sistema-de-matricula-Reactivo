@@ -94,9 +94,9 @@ Registro de matriculas.
     "message": "not-found",
     "data": [
         {
-            "datetime": "2025-03-13T13:29:49.0097671",
-            "message": "ID NOT FOUND:99",
-            "path": "http://localhost:8080/estudiantes/99"
+            "datetime": "2025-03-13T16:57:40.1749614",
+            "message": "ID NOT FOUND:67d353da00660f170edb07aff",
+            "path": "http://localhost:8080/cursos/67d353da00660f170edb07aff"
         }
     ]
 }
@@ -113,7 +113,7 @@ Registro de matriculas.
     "data": [
         {
             "datetime": "2025-03-13T13:06:23.4849308",
-            "message": "siglas: el tamaño debe estar entre 3 y 20",
+            "message": "siglas: el tamaño debe estar entre 3 y 7",
             "path": "http://localhost:8080/cursos"
         }
     ]

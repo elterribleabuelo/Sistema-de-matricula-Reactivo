@@ -45,8 +45,6 @@ public class MatriculaController {
     @PostMapping
     public Mono<ResponseEntity<GenericResponseDTO>> save(@Valid @RequestBody MatriculaDTO matricula, final ServerHttpRequest req) {
 
-        log.info("MatriculaDTO inicial: {}", matricula);
-
         // Obteniendo id de estudiante a través de lo que viene en el request
         String idEstudiante = matricula.getEstudiante().getId();
 

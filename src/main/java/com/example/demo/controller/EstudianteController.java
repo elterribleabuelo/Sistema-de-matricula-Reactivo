@@ -8,7 +8,6 @@ import com.example.demo.service.IEstudianteService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -74,7 +73,7 @@ public class EstudianteController {
     }
 
     @PutMapping("/{id}")
-    public Mono<ResponseEntity<GenericResponseDTO>> update(@Valid @PathVariable("id") String id, @RequestBody EstudianteDTO estudiante) {
+    public Mono<ResponseEntity<GenericResponseDTO>> update(@Valid @PathVariable("id") String id, @Valid @RequestBody EstudianteDTO estudiante) {
 
         return Mono.just(estudiante)
                 .map(e -> {
