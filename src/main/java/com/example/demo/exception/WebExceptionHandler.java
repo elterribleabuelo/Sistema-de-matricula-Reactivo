@@ -1,9 +1,11 @@
 package com.example.demo.exception;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.example.demo.dto.GenericResponseDTO;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 import org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
@@ -56,12 +58,14 @@ public class WebExceptionHandler extends AbstractErrorWebExceptionHandler {
 
             statusCode = responseStatusException.getStatusCode().value();
 
+            CustomErrorResponse errors = new CustomErrorResponse(LocalDateTime.now(),
+                    responseStatusException.getReason(),
+                    uri);
+
             return ServerResponse
                     .status(statusCode)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .bodyValue(new CustomErrorResponse(LocalDateTime.now(),
-                            responseStatusException.getReason(),
-                            uri)
+                    .bodyValue(new GenericResponseDTO(statusCode,"not-found", List.of(errors))
                     );
         }else{
             return handleGeneralException(err,statusCode,uri);
@@ -71,15 +75,17 @@ public class WebExceptionHandler extends AbstractErrorWebExceptionHandler {
     private Mono<ServerResponse> handleGeneralException(Throwable err,int statusCode,String uri) {
 
         if (err instanceof IllegalArgumentException) {
+            CustomErrorResponse errors = new CustomErrorResponse(LocalDateTime.now(),"Parámetro inválido: " + err.getMessage(),uri);
             return ServerResponse
                     .status(statusCode)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .bodyValue(new CustomErrorResponse(LocalDateTime.now(),"Parámetro inválido: " + err.getMessage(),uri));
+                    .bodyValue(new GenericResponseDTO(statusCode,"bad-request",List.of(errors)));
         } else {
+            CustomErrorResponse errors = new CustomErrorResponse(LocalDateTime.now(),err.getMessage(),uri);
             return ServerResponse
                     .status(statusCode)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .bodyValue(new CustomErrorResponse(LocalDateTime.now(),err.getMessage(),uri));
+                    .bodyValue(new GenericResponseDTO(statusCode,"not-found",List.of(errors)));
         }
     }
 
@@ -89,10 +95,12 @@ public class WebExceptionHandler extends AbstractErrorWebExceptionHandler {
                                                             .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
                                                             .collect(Collectors.joining(", "));
 
+        CustomErrorResponse errors = new CustomErrorResponse(LocalDateTime.now(),errores,uri);
+
 
         return ServerResponse.status(statusCode)
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(new CustomErrorResponse(LocalDateTime.now(),errores,uri));
+                .bodyValue(new GenericResponseDTO(statusCode,"bad-request",List.of(errors)));
 
     }
 

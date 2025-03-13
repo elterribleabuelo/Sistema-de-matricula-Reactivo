@@ -21,7 +21,7 @@ public class CursoDTO {
     private String nombre;
 
     @NotNull
-    @Size(min = 3, max = 20)
+    @Size(min = 3, max = 7)
     private String siglas;
 
     @NotNull

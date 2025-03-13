@@ -36,8 +36,8 @@ public class CursoController {
         return service.existsCursoByNombre(curso.getNombre())
                 .flatMap(exists -> {
                     if(exists){
-                        CustomErrorResponse error = new CustomErrorResponse(LocalDateTime.now(),"El nombre del curso ya está registrado",String.valueOf(req.getURI()));
-                        return Mono.just(ResponseEntity.badRequest().body(new GenericResponseDTO(400,"not-found", List.of(error))));
+                        CustomErrorResponse errors = new CustomErrorResponse(LocalDateTime.now(),"El nombre del curso ya está registrado",String.valueOf(req.getURI()));
+                        return Mono.just(ResponseEntity.badRequest().body(new GenericResponseDTO(400,"bad-request", List.of(errors))));
                     }else{
                         return service.save(convertToDocument(curso))
                                 .map(this::convertToDto)

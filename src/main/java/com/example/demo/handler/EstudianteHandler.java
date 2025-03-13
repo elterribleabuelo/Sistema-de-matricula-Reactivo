@@ -39,10 +39,10 @@ public class EstudianteHandler {
                     return service.existsEstudianteByDni(dni)
                             .flatMap(exists->{
                                 if(exists){
-                                    CustomErrorResponse error = new CustomErrorResponse(LocalDateTime.now(),"El DNI ya está registrado", String.valueOf(request.uri()));
+                                    CustomErrorResponse errors = new CustomErrorResponse(LocalDateTime.now(),"El DNI ya está registrado", String.valueOf(request.uri()));
                                     return ServerResponse.status(400)
                                             .contentType(MediaType.APPLICATION_JSON)
-                                            .bodyValue(new GenericResponseDTO(400,"not-found", List.of(error)));
+                                            .bodyValue(new GenericResponseDTO(400,"bad-request", List.of(errors)));
                                 }else{
                                     return  Mono.just(estudianteDTO)
                                                 .flatMap(requestValidator::validate)

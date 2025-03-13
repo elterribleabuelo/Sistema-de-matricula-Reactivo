@@ -34,8 +34,8 @@ public class EstudianteController {
         return service.existsEstudianteByDni(estudiante.getDni())
                         .flatMap(exists -> {
                             if(exists){
-                                CustomErrorResponse error = new CustomErrorResponse(LocalDateTime.now(),"El DNI ya está registrado", String.valueOf(req.getURI()));
-                                return Mono.just(ResponseEntity.badRequest().body(new GenericResponseDTO(400,"not-found", List.of(error))));
+                                CustomErrorResponse errors = new CustomErrorResponse(LocalDateTime.now(),"El DNI ya está registrado", String.valueOf(req.getURI()));
+                                return Mono.just(ResponseEntity.badRequest().body(new GenericResponseDTO(400,"bad-request", List.of(errors))));
                             }else{
                                 return service.save(convertToDocument(estudiante))
                                         .map(this::convertToDto)

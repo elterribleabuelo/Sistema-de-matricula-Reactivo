@@ -21,7 +21,7 @@ public abstract class CRUDImpl<T,ID> implements ICRUD<T,ID> {
     public Mono<T> update(ID id, T t) {
         return getRepo().findById(id)
                 .onErrorMap(Exception.class, e -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error en la BD", e))
-                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "ID NOT FOUND" + id )))
+                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "ID NOT FOUND:" + id )))
                 .flatMap(e->getRepo().save(t));
     }
 

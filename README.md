@@ -59,7 +59,13 @@ CRUD
 
 Creacion/lectura de matriculas y relación de cursos matriculados y sus estudiantes correspondientes.
 
-- /matricula (POST) --> Anotacional | /v2/matricula --> Funcional
+***Anotacional***
+
+- /matricula (POST)
+
+***Funcional***
+
+- /v2/matricula (POST)
 
 ### `Body request POST`
 
@@ -88,9 +94,9 @@ Creacion/lectura de matriculas y relación de cursos matriculados y sus estudian
     "message": "not-found",
     "data": [
         {
-            "datetime": "2024-11-28T17:47:17.781305",
-            "message": "ID NOT FOUND 10000",
-            "path": "uri=/estudiantes/10000"
+            "datetime": "2025-03-13T13:29:49.0097671",
+            "message": "ID NOT FOUND:99",
+            "path": "http://localhost:8080/estudiantes/99"
         }
     ]
 }
@@ -102,9 +108,15 @@ Creacion/lectura de matriculas y relación de cursos matriculados y sus estudian
 
 ```Response
 {
-    "datetime": "2025-03-10T22:19:25.7185602",
-    "message": "siglas: el tamaño debe estar entre 3 y 20",
-    "status": 400
+    "status": 400,
+    "message": "bad-request",
+    "data": [
+        {
+            "datetime": "2025-03-13T13:06:23.4849308",
+            "message": "siglas: el tamaño debe estar entre 3 y 20",
+            "path": "http://localhost:8080/cursos"
+        }
+    ]
 }
 ```
 
@@ -114,9 +126,15 @@ Creacion/lectura de matriculas y relación de cursos matriculados y sus estudian
 
 ```Response
 {
-    "datetime": "2025-03-11T00:34:56.2882672",
-    "message": "apellidos: Debe contener solo letras y espacios",
-    "status": 400
+    "status": 400,
+    "message": "bad-request",
+    "data": [
+        {
+            "datetime": "2025-03-13T13:22:40.6436279",
+            "message": "apellidos: Debe contener solo letras y espacios",
+            "path": "http://localhost:8080/estudiantes"
+        }
+    ]
 }
 ```
 
@@ -126,9 +144,15 @@ Creacion/lectura de matriculas y relación de cursos matriculados y sus estudian
 
 ```Response
 {
-    "datetime": "2025-03-11T00:31:39.8168248",
-    "message": "dni: Debe contener solo números",
-    "status": 400
+    "status": 400,
+    "message": "bad-request",
+    "data": [
+        {
+            "datetime": "2025-03-13T13:24:18.0486151",
+            "message": "dni: Debe contener solo números",
+            "path": "http://localhost:8080/estudiantes"
+        }
+    ]
 }
 ```
 
@@ -141,12 +165,12 @@ Creacion/lectura de matriculas y relación de cursos matriculados y sus estudian
 ```Response
 {
     "status": 400,
-    "message": "not-found",
+    "message": "bad-request",
     "data": [
         {
-            "datetime": "2025-03-11T00:37:08.3887575",
+            "datetime": "2025-03-13T13:32:53.5483936",
             "message": "El DNI ya está registrado",
-            "status": 400
+            "path": "http://localhost:8080/estudiantes"
         }
     ]
 }
@@ -159,13 +183,48 @@ Creacion/lectura de matriculas y relación de cursos matriculados y sus estudian
 ```Response
 {
     "status": 400,
-    "message": "not-found",
+    "message": "bad-request",
     "data": [
         {
-            "datetime": "2025-03-11T00:38:49.9768856",
+            "datetime": "2025-03-13T13:33:29.8248911",
             "message": "El nombre del curso ya está registrado",
-            "status": 400
+            "path": "http://localhost:8080/cursos"
         }
     ]
 }
 ```
+
+<h2 style="color:blue;">Consideraciones</h2>
+
+La aplicación está protegida con el uso de JWT, por lo cual para consumir los servicios
+se necesita autenticarse.
+
+La ruta a consultar es la siguiente: 
+- /login (POST)
+
+Para la ruta en cuestión usar el siguiente body :
+
+```Body request POST
+{
+    "username" : "mitocode",
+    "password" : "123"
+}
+```
+y además crear una colección users en MongoDB con el siguiente registro:
+
+```Registro en BD
+{
+    "_id" : ObjectId("67a01b6803ab3a31fcf2c836"),
+    "username" : "mitocode",
+    "password" : "$2a$12$bwmRR2qx59lTwHQXH3WwmOgVeRJ0F1ex9mTixbXuDv3G0zxaZwymC",
+    "status" : true,
+    "roles" : [
+        {
+            "_id" : ObjectId("67a01b6803ab3a31fcf2c826")
+        }
+    ]
+}
+```
+
+
+
