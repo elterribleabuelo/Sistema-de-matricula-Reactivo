@@ -65,42 +65,6 @@ Creacion/lectura de matriculas y relación de cursos matriculados y sus estudian
 
 <h2 style="color:red;">Control de excepciones</h2>
 
-- Registro de estudiante con DNI repetido
-
-### `Response`
-
-```Response
-{
-    "status": 400,
-    "message": "bad-request",
-    "data": [
-        {
-            "datetime": "2024-11-28T15:13:59.8746451",
-            "message": "dni: El DNI ya está registrado",
-            "path": "uri=/estudiantes"
-        }
-    ]
-}
-```
-
-- Registro de curso con nombre repetido
-
-### `Response`
-
-```Response
-{
-    "status": 400,
-    "message": "bad-request",
-    "data": [
-        {
-            "datetime": "2024-11-28T15:15:24.679776",
-            "message": "nombre: El nombre del Curso ya está registrado",
-            "path": "uri=/cursos"
-        }
-    ]
-}
-```
-
 - Actualizacion de estudiantes y cursos con ID no registrado
 
 ### `Response`
@@ -114,6 +78,80 @@ Creacion/lectura de matriculas y relación de cursos matriculados y sus estudian
             "datetime": "2024-11-28T17:47:17.781305",
             "message": "ID NOT FOUND 10000",
             "path": "uri=/estudiantes/10000"
+        }
+    ]
+}
+```
+
+- Registro de curso con una cantidad de siglas menor a 3
+
+### `Response`
+
+```Response
+{
+    "datetime": "2025-03-10T22:19:25.7185602",
+    "message": "siglas: el tamaño debe estar entre 3 y 20",
+    "status": 400
+}
+```
+
+- Registro de estudiante con un nombre que contiene caracteres distintos a letras-acento/espacios en blanco
+
+### `Response`
+
+```Response
+{
+    "datetime": "2025-03-11T00:34:56.2882672",
+    "message": "apellidos: Debe contener solo letras y espacios",
+    "status": 400
+}
+```
+
+- Registro de estudiante con un DNI contiene caracteres distintos a números
+
+### `Response`
+
+```Response
+{
+    "datetime": "2025-03-11T00:31:39.8168248",
+    "message": "dni: Debe contener solo números",
+    "status": 400
+}
+```
+
+<h2 style="color:red;">Validaciones adicionales</h2>
+
+- Registro de estudiante con DNI repetido
+
+### `Response`
+
+```Response
+{
+    "status": 400,
+    "message": "not-found",
+    "data": [
+        {
+            "datetime": "2025-03-11T00:37:08.3887575",
+            "message": "El DNI ya está registrado",
+            "status": 400
+        }
+    ]
+}
+```
+
+- Registro de curso con nombre repetido
+
+### `Response`
+
+```Response
+{
+    "status": 400,
+    "message": "not-found",
+    "data": [
+        {
+            "datetime": "2025-03-11T00:38:49.9768856",
+            "message": "El nombre del curso ya está registrado",
+            "status": 400
         }
     ]
 }
