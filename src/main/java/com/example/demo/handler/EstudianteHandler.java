@@ -39,7 +39,7 @@ public class EstudianteHandler {
                     return service.existsEstudianteByDni(dni)
                             .flatMap(exists->{
                                 if(exists){
-                                    CustomErrorResponse error = new CustomErrorResponse(LocalDateTime.now(),"El dni ya está registrado", HttpStatus.BAD_REQUEST.value());
+                                    CustomErrorResponse error = new CustomErrorResponse(LocalDateTime.now(),"El DNI ya está registrado", HttpStatus.BAD_REQUEST.value());
                                     return ServerResponse.status(400)
                                             .contentType(MediaType.APPLICATION_JSON)
                                             .bodyValue(new GenericResponseDTO(400,"not-found", List.of(error)));

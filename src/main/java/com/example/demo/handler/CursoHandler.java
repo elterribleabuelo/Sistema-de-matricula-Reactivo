@@ -39,7 +39,7 @@ public class CursoHandler {
                             return service.existsCursoByNombre(nombre)
                                     .flatMap(exists->{
                                         if(exists){
-                                            CustomErrorResponse error = new CustomErrorResponse(LocalDateTime.now(),"El nombre ya está en uso", HttpStatus.BAD_REQUEST.value());
+                                            CustomErrorResponse error = new CustomErrorResponse(LocalDateTime.now(),"El nombre del curso ya está registrado", HttpStatus.BAD_REQUEST.value());
                                             return ServerResponse.status(400)
                                                     .contentType(MediaType.APPLICATION_JSON)
                                                     .bodyValue(new GenericResponseDTO(400,"not-found", List.of(error)));
