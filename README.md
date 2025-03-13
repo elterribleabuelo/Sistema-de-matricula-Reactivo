@@ -1,6 +1,6 @@
 # Sistema-de-matricula-Reactivo
 
-Este repositorio contiene el código fuente de los servicios REST para el CRUD de estudiante y curso , así como el registro de matrícula de una academia usando progrmación reactiva y Spring Web Flux.
+Este repositorio contiene el código fuente de los servicios REST para el CRUD de estudiante y curso , así como el registro de matrícula de una academia usando programación reactiva y Spring Web Flux.
 
 Los endpoints desarrollados son:
 
@@ -57,7 +57,7 @@ CRUD
 
 **Matricula**
 
-Creacion/lectura de matriculas y relación de cursos matriculados y sus estudiantes correspondientes.
+Registro de matriculas.
 
 ***Anotacional***
 
