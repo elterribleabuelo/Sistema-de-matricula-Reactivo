@@ -6,10 +6,21 @@ Los endpoints desarrollados son:
 
 **Estudiantes:**
 
-CRUD y listado de estudiantes en forma descendente usando la edad.
+CRUD y listado de estudiantes en forma ascendente/descendente usando la edad.
 
-- /estudiantes (GET,POST) --> Anotacional | /v2/estudiantes (GET,POST) --> Funcional
-- /estudiantes/{id} (GET,PUT,DELETE) --> Anotacional | /estudiantes/{id} (GET,PUT,DELETE) --> Funcional
+***Anotacional***
+
+- /estudiantes (GET,POST)
+- /estudiantes/{id} (GET,PUT,DELETE)
+- /estudiantes/ordenadoAscPorEdad (GET)
+- /estudiantes/ordenadoDescPorEdad (GET)
+
+***Funcional***
+
+- /v2/estudiantes (GET,POST)
+- /v2/estudiantes/{id} (GET,PUT,DELETE)
+- /v2/estudiantes/ordenadoAscPorEdad (GET)
+- /v2/estudiantes/ordenadoDescPorEdad (GET)
 
 ### `Body request POST/PUT`
 
@@ -22,15 +33,17 @@ CRUD y listado de estudiantes en forma descendente usando la edad.
 }
 ```
 
-- /estudiantes/ordenadoAscPorEdad (GET) --> Anotacional | /v2/estudiantes/ordenadoAscPorEdad (GET) --> Funcional
-- /estudiantes/ordenadoDescPorEdad (GET) --> Anotacional | /v2/estudiantes/ordenadoDescPorEdad (GET) --> Funcional
-
 **Cursos**
 
 CRUD
 
-- /cursos(GET,POST) --> Anotacional | /v2/cursos (GET,POST) --> Funcional
-- /cursos/{id} (GET,PUT,DELETE) --> Anotacional | /v2/cursos/{id} (GET,PUT,DELETE) --> Funcional
+***Anotacional***
+- /cursos(GET,POST)
+-  /cursos/{id} (GET,PUT,DELETE)
+
+***Funcional***
+- /v2/cursos (GET,POST)
+- /v2/cursos/{id} (GET,PUT,DELETE)
 
 ### `Body request POST/PUT`
 

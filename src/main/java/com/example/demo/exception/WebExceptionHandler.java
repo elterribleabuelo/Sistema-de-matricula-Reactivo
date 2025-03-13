@@ -46,9 +46,11 @@ public class WebExceptionHandler extends AbstractErrorWebExceptionHandler {
 
         Throwable err = getError(req);
 
+        String uri = String.valueOf(req.uri());
+
         if (err instanceof WebExchangeBindException webExchangeBindException) {
 
-            return handleValidationException(webExchangeBindException,statusCode);
+            return handleValidationException(webExchangeBindException,statusCode,uri);
 
         }else if(err instanceof ResponseStatusException responseStatusException){
 
@@ -59,29 +61,29 @@ public class WebExceptionHandler extends AbstractErrorWebExceptionHandler {
                     .contentType(MediaType.APPLICATION_JSON)
                     .bodyValue(new CustomErrorResponse(LocalDateTime.now(),
                             responseStatusException.getReason(),
-                            statusCode)
+                            uri)
                     );
         }else{
-            return handleGeneralException(err,statusCode);
+            return handleGeneralException(err,statusCode,uri);
         }
     }
 
-    private Mono<ServerResponse> handleGeneralException(Throwable err,int statusCode) {
+    private Mono<ServerResponse> handleGeneralException(Throwable err,int statusCode,String uri) {
 
         if (err instanceof IllegalArgumentException) {
             return ServerResponse
                     .status(statusCode)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .bodyValue(new CustomErrorResponse(LocalDateTime.now(),"Parámetro inválido: " + err.getMessage(),statusCode));
+                    .bodyValue(new CustomErrorResponse(LocalDateTime.now(),"Parámetro inválido: " + err.getMessage(),uri));
         } else {
             return ServerResponse
                     .status(statusCode)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .bodyValue(new CustomErrorResponse(LocalDateTime.now(),err.getMessage(),statusCode));
+                    .bodyValue(new CustomErrorResponse(LocalDateTime.now(),err.getMessage(),uri));
         }
     }
 
-    private Mono<ServerResponse> handleValidationException(WebExchangeBindException ex,int statusCode) {
+    private Mono<ServerResponse> handleValidationException(WebExchangeBindException ex,int statusCode,String uri) {
 
         String errores = ex.getBindingResult().getFieldErrors().stream()
                                                             .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
@@ -90,7 +92,7 @@ public class WebExceptionHandler extends AbstractErrorWebExceptionHandler {
 
         return ServerResponse.status(statusCode)
                 .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(new CustomErrorResponse(LocalDateTime.now(),errores,statusCode));
+                .bodyValue(new CustomErrorResponse(LocalDateTime.now(),errores,uri));
 
     }
 

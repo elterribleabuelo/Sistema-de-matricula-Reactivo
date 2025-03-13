@@ -19,13 +19,9 @@ public abstract class CRUDImpl<T,ID> implements ICRUD<T,ID> {
 
     @Override
     public Mono<T> update(ID id, T t) {
-
-        Class<?> clazz = t.getClass();
-        String className = clazz.getSimpleName();
-
         return getRepo().findById(id)
                 .onErrorMap(Exception.class, e -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error en la BD", e))
-                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, className + " con ID : " + id + " no encontrado")))
+                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "ID NOT FOUND" + id )))
                 .flatMap(e->getRepo().save(t));
     }
 
@@ -38,14 +34,14 @@ public abstract class CRUDImpl<T,ID> implements ICRUD<T,ID> {
     public Mono<T> findById(ID id) {
         return getRepo().findById(id)
                 .onErrorMap(Exception.class, e -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error en la BD", e))
-                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "no se encontró registros con ID:" + id)));
+                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "ID NOT FOUND:" + id)));
     }
 
     @Override
     public Mono<Boolean> delete(ID id) {
         return getRepo().findById(id)
                 .onErrorMap(Exception.class, e -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error en la BD", e))
-                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "no se encontró el registro a eliminar")))
+                .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "ID NOT FOUND:" + id)))
                 .hasElement()
                 .flatMap(result ->{
                     if(result) {
